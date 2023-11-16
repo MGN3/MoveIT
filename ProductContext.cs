@@ -18,15 +18,6 @@ namespace MoveIT {
 				products.Property(p => p.UrlImg).IsRequired();//.IsRequired(false) optional vs tasks.Ignore
 				products.Property(p => p.Description).IsRequired();
 			});
-
-			/*
-			 * 	public int Id { get; set; }
-		public string Category { get; set; }
-		public string Name { get; set; }
-		public decimal Price { get; set; }
-		public string UrlImg { get; set; }
-		public string Description { get; set; }
-			 **/
 		}
 	}
 }
