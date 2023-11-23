@@ -71,3 +71,11 @@ E:\MGN\source\repos\MoveIT\obj\Debug\net6.0\refint\MoveIT.dll
 E:\MGN\source\repos\MoveIT\obj\Debug\net6.0\MoveIT.pdb
 E:\MGN\source\repos\MoveIT\obj\Debug\net6.0\MoveIT.genruntimeconfig.cache
 E:\MGN\source\repos\MoveIT\obj\Debug\net6.0\ref\MoveIT.dll
+E:\MGN\source\repos\MoveIT\bin\Debug\net6.0\Humanizer.dll
+E:\MGN\source\repos\MoveIT\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Design.dll
+E:\MGN\source\repos\MoveIT\bin\Debug\net6.0\Microsoft.Extensions.DependencyModel.dll
+E:\MGN\source\repos\MoveIT\bin\Debug\net6.0\Mono.TextTemplating.dll
+E:\MGN\source\repos\MoveIT\bin\Debug\net6.0\System.CodeDom.dll
+E:\MGN\source\repos\MoveIT\bin\Debug\net6.0\System.Text.Encodings.Web.dll
+E:\MGN\source\repos\MoveIT\bin\Debug\net6.0\System.Text.Json.dll
+E:\MGN\source\repos\MoveIT\bin\Debug\net6.0\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll
