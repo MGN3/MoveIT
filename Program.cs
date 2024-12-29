@@ -54,7 +54,7 @@ namespace MoveIT {
 				return Results.Ok("SQL Server Database created: " + dbContext.Database.IsSqlServer());
 			});
 
-			app.MapGet("/api/get/all", async ([FromServices] MoveITDbContext dbContext) => {
+			app.MapGet("/api/Products", async ([FromServices] MoveITDbContext dbContext) => {
 				var allProducts = dbContext.Products.ToList(); // All database products
 
 				return Results.Json(allProducts);
@@ -67,14 +67,14 @@ namespace MoveIT {
 				return Results.Ok("SQL Server Database created: " + dbContext.Database.IsSqlServer());
 			});
 
-			app.MapPost("/addUser", async ([FromServices] MoveITDbContext dbContext, User newUser) => {
+			app.MapPost("/api/Users", async ([FromServices] MoveITDbContext dbContext, User newUser) => {
 				//The user to be added
 				User forgedUser;
 				//Verifying if user already exists using email, since it is a unique index.
 				var existingUser = await dbContext.Users.FirstOrDefaultAsync(u => u.Email == newUser.Email);
 
 				if (existingUser != null) {
-					return Results.BadRequest("You already have an accout with that email.");
+					return Results.BadRequest("Email not availeable.");
 				} else {
 					forgedUser = new User(Guid.NewGuid(), newUser.Name, newUser.Email, newUser.Password);
 					dbContext.Users.Add(forgedUser);
@@ -104,9 +104,9 @@ namespace MoveIT {
 				var existingUser = await dbContext.Users.FirstOrDefaultAsync(u => u.Name == name);
 
 				if (existingUser != null) {
-					nameAvaileable = true;
-				} else {
 					nameAvaileable = false;
+				} else {
+					nameAvaileable = true;
 				}
 				return Results.Ok(nameAvaileable);
 			});
@@ -117,19 +117,24 @@ namespace MoveIT {
 				var existingUser = await dbContext.Users.FirstOrDefaultAsync(u => u.Name == name);
 
 				if (existingUser != null) {
-					nameAvaileable = true;
-				} else {
 					nameAvaileable = false;
+				} else {
+					nameAvaileable = true;
 				}
 				return Results.Ok(nameAvaileable);
 			});
 
+			app.MapPost("/api/emailAvailable", async ([FromServices] MoveITDbContext dbContext, [FromBody] JsonElement jsonElement) => {
+				string email = jsonElement.GetProperty("email").GetString().ToLower(); // Convertimos el email a minúsculas
+				bool emailAvailable;
+				var existingUser = await dbContext.Users.FirstOrDefaultAsync(u => u.Email.ToLower() == email); // Comparamos en minúsculas
 
+				emailAvailable = existingUser == null;
 
-			app.MapGet("/user", (int number) => {
-				return "El doble es: " + number * 2;
-				//For a fetchAPI request, return a JSON
+				return Results.Json(new { emailAvailable });
 			});
+
+
 
 			///METODO CON CLASES APARTE
 			//var usersData = new UsersData {
@@ -186,6 +191,7 @@ namespace MoveIT {
 				await File.WriteAllTextAsync(jsonFilePath, json);
 
 				//TODO->Call to a chatbot/ai chat to return an answer based on the imput??
+
 				// Select a random response from a list of typical messages 
 				Random rnd = new Random();
 				string message = responses[rnd.Next(responses.Count)];
@@ -210,6 +216,25 @@ namespace MoveIT {
 
 				// Return messages from user.
 				return Results.Json(userMessages[username]);
+			});
+
+
+			app.MapGet("/user", (int number) => {
+				return "El doble es: " + number * 2;
+				//For a fetchAPI request, return a JSON
+			});
+
+			app.MapPost("/api/emaildata", async (HttpContext context) => {
+				// El string de prueba que deseas devolver
+				string stringResponse = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, " +
+				"sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim" +
+				" veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo " +
+				"consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum " +
+				"dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, " +
+				"sunt in culpa qui officia deserunt mollit anim id est laborum.";
+
+				// Devolver una respuesta JSON con el string
+				return Results.Ok(stringResponse);
 			});
 
 			app.Run();
